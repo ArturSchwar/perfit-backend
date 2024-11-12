@@ -3,13 +3,17 @@ import pool from '../config/db.js';
 // Função para criar um novo usuário
 export const createUser = async (name, email, hashedPassword) => {
   const conn = await pool.getConnection();
-  const result = await conn.query(
-    'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
-    [name, email, hashedPassword]
-  );
-  conn.release();
-  return result;
+  try {
+    const result = await conn.query(
+      'INSERT INTO users (name, email, password) VALUES (?, ?, ?)',
+      [name, email, hashedPassword]
+    );
+    return result;
+  } finally {
+    conn.release();
+  }
 };
+
 
 // Função para buscar um usuário pelo email
 export const findUserByEmail = async (email) => {

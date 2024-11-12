@@ -1,5 +1,5 @@
 import { getConnection, closePool } from '../../config/db.js';
-import User from '../../models/userModel.js';
+import { createUser, findUserByEmail  } from '../../models/userModel.js';
 import { faker } from '@faker-js/faker';
 
 jest.setTimeout(30000); // Ajusta o tempo limite
@@ -24,7 +24,7 @@ describe('Testando o modelo de usuário', () => {
       password: 'senha123'
     };
 
-    const result = await User.createUser(newUser.name, newUser.email, newUser.password);
+    const result = await createUser(newUser.name, newUser.email, newUser.password);
     expect(result).toHaveProperty('insertId');
   });
 
@@ -36,9 +36,9 @@ describe('Testando o modelo de usuário', () => {
       password: 'senha123'
     };
 
-    await User.createUser(existingUser.name, existingUser.email, existingUser.password);
+    await createUser(existingUser.name, existingUser.email, existingUser.password);
 
-    const user = await User.findUserByEmail(email);
+    const user = await findUserByEmail(email);
     expect(user).toHaveProperty('email', email);
   });
 });

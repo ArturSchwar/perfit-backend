@@ -11,4 +11,12 @@ const pool = mariadb.createPool({
   connectionLimit: 5,
 });
 
+export const getConnection = async () => {
+  return await pool.getConnection();
+}
+
+export const closePool = async () => {
+  return await pool.end();
+}
+
 export default pool;
