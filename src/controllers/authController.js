@@ -2,7 +2,12 @@ import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import nodemailer from "nodemailer";
 import crypto from "crypto";
-import { createUser, findUserByEmail, saveResetToken } from "../models/userModel.js";
+import {
+  createUser,
+  findUserByEmail,
+  saveResetToken,
+} from "../models/userModel.js";
+import { PasswordValidator } from "../validators/passwordValidator.js";
 
 const secretKey = process.env.SECRET_KEY;
 
@@ -18,8 +23,12 @@ export const registerUser = async (req, res) => {
     return res.status(400).json({ message: "Campos obrigatórios faltando." });
   }
 
-  if (password.length < 6) {
-    return res.status(400).json({ message: "Senha deve ter pelo menos 6 caracteres." });
+  const passwordValidator = new PasswordValidator();
+  
+  // Validação de senha usando PasswordValidator
+  const passwordErrors = passwordValidator.validate(password);
+  if (passwordErrors.length > 0) {
+    return res.status(400).json({ errors: passwordErrors });
   }
 
   try {
