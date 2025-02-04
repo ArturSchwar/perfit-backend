@@ -1,5 +1,9 @@
 # Backend do Projeto Perfit
 
+⚠️ **Nota:** Este repositório contém **apenas o backend** do projeto **Perfit**.  
+O backend está **em desenvolvimento**, mas já implementa várias funcionalidades essenciais.  
+🔒 O frontend é um projeto **privado** e não está disponível publicamente.  
+
 Este é o backend do projeto **Perfit**, desenvolvido em **Node.js** com **Express** e utilizando **MariaDB** como banco de dados. O backend lida com as APIs REST para operações de usuários, autenticação, redefinição de senha e outras funcionalidades do sistema.
 
 ## Funcionalidades
